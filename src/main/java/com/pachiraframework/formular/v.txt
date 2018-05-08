@@ -1,0 +1,146 @@
+package com.pachiraframework.formular;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeSet;
+
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import com.pachiraframework.formular.FormularParser.AbsContext;
+import com.pachiraframework.formular.FormularParser.MaxContext;
+import com.pachiraframework.formular.FormularParser.NaturalLogarithmContext;
+import com.pachiraframework.formular.FormularParser.OtherContext;
+import com.pachiraframework.formular.FormularParser.SquareRootContext;
+import com.pachiraframework.formular.FormularParser.TangentContext;
+
+public class FormularVisitorImpl extends FormularBaseVisitor<Double> {
+	private Map<String, BigDecimal> result = new HashMap<>();
+
+	@Override
+	public Double visitParens(FormularParser.ParensContext ctx) {
+		return visit(ctx.expr());
+	}
+
+	@Override
+	public Double visitMulDiv(FormularParser.MulDivContext ctx) {
+		double left = visit(ctx.expr(0));
+		double right = visit(ctx.expr(1));
+		if (ctx.op.getType() == FormularParser.MULTIPLICATION) {
+			return left * right;
+		} else {
+			return left / right;
+		}
+	}
+
+	@Override
+	public Double visitAddSub(FormularParser.AddSubContext ctx) {
+		double left = visit(ctx.expr(0));
+		double right = visit(ctx.expr(1));
+		if (ctx.op.getType() == FormularParser.ADDITION) {
+			return left + right;
+		} else {
+			return left - right;
+		}
+	}
+
+	@Override
+	public Double visitRealNumberPositive(FormularParser.RealNumberPositiveContext ctx) {
+		return Double.valueOf(ctx.REAL_NUMBER().getText());
+	}
+
+	@Override
+	public Double visitRealNumberNegative(FormularParser.RealNumberNegativeContext ctx) {
+		return Double.valueOf("-" + visit(ctx.expr()));
+	}
+
+	@Override
+	public Double visitInteger(FormularParser.IntegerContext ctx) {
+		return Integer.valueOf(ctx.INTEGER().getText()).doubleValue();
+	}
+
+	@Override
+	public Double visitSine(FormularParser.SineContext ctx) {
+		double number = visit(ctx.expr());
+		return Math.sin(number / 57.2958);
+	}
+
+	@Override
+	public Double visitCosecant(FormularParser.CosecantContext ctx) {
+		double number = visit(ctx.expr());
+		return 1 / Math.sin(number / 57.2958);
+	}
+
+	@Override
+	public Double visitCosine(FormularParser.CosineContext ctx) {
+		double number = visit(ctx.expr());
+		return Math.cos(number / 57.2958);
+	}
+
+	@Override
+	public Double visitCotangent(FormularParser.CotangentContext ctx) {
+		double number = visit(ctx.expr());
+		return 1 / Math.tan(number / 57.2958);
+	}
+
+	@Override
+	public Double visitSecant(FormularParser.SecantContext ctx) {
+		double number = visit(ctx.expr());
+		return 1 / Math.cos(number / 57.2958);
+	}
+
+	@Override
+	public Double visitTangent(TangentContext ctx) {
+		double number = visit(ctx.expr());
+		return Math.tan(number / 57.2958);
+	}
+
+	@Override
+	public Double visitIndex(FormularParser.IndexContext ctx) {
+		double left = visit(ctx.expr(0));
+		double right = visit(ctx.expr(1));
+		return Math.pow(left, right);
+	}
+
+	@Override
+	public Double visitLogarithm(FormularParser.LogarithmContext ctx) {
+		if (ctx.expr().size() < 2) {
+			return Math.log10(visit(ctx.expr(0)));
+		} else {
+			return (Math.log(visit(ctx.expr(0)))) / (Math.log(visit(ctx.expr(1))));
+		}
+	}
+
+	@Override
+	public Double visitNaturalLogarithm(NaturalLogarithmContext ctx) {
+		return Math.log(visit(ctx.expr()));
+	}
+
+	@Override
+	public Double visitSquareRoot(SquareRootContext ctx) {
+		return Math.sqrt(visit(ctx.expr()));
+	}
+
+	@Override
+	public Double visitOther(OtherContext ctx) {
+		return null;
+	}
+
+	@Override
+	public Double visitAbs(AbsContext ctx) {
+		double number = visit(ctx.expr());
+		return Math.abs(number);
+	}
+
+	@Override
+	public Double visitMax(MaxContext ctx) {
+		TreeSet<Double> set = new TreeSet<>();
+		int size = ctx.expr().size();
+		for(int i =0;i < size; i++) {
+			Double value = visit(ctx.expr(i));
+			set.add(value);
+		}
+		return set.last();
+	}
+	
+}
