@@ -8,6 +8,7 @@ import com.pachiraframework.formular.FormularParser.IntegerContext;
 import com.pachiraframework.formular.FormularParser.MaxContext;
 import com.pachiraframework.formular.FormularParser.MinContext;
 import com.pachiraframework.formular.FormularParser.MultiplyContext;
+import com.pachiraframework.formular.FormularParser.NegativeContext;
 import com.pachiraframework.formular.FormularParser.SubtractContext;
 
 public class FormularVisitorImpl extends FormularBaseVisitor<Double> {
@@ -85,6 +86,15 @@ public class FormularVisitorImpl extends FormularBaseVisitor<Double> {
 	public Double visitFloat(FloatContext ctx) {
 		String text = ctx.getText();
 		return Double.valueOf(text);
+	}
+
+	/**
+	 * 负数(-A1)  (-1)
+	 */
+	@Override
+	public Double visitNegative(NegativeContext ctx) {
+		Double value =visit(ctx.expr());
+		return -1D*value;
 	}
 
 

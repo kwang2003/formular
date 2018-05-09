@@ -9,50 +9,62 @@ public class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		assertEquals("343", 343D);
-		assertEquals("-343", -343D);
-		assertEquals("3.43", 3.43D);
-		assertEquals(".343", .343D);
-		assertEquals("0343", 343D);
-		assertEquals("-3.43", -3.43D);
-		assertEquals("0", 0D);
-		assertEquals("0.0", 0D);
-		assertEquals("1", 1D);
-		assertEquals("24.13", 24.13D);
+		runAllTest();
+	}	
+	
+	/**
+	 * 运行所有测试用例
+	 */
+	public static void runAllTest() {
+		//正数常量
+		testPositiveNumber();
+		
+		//(-A1)负数，因为-可以代表操作符减号，也可以表示负数标识位，为了区分操作符减号与负数标识号，将负数表示为(-A1),即负数必须用括号包含起来
+		testNegativeNumber();
+		
+		//加减混合运算
+		testAddSubstract();
 		
 		//abs函数
-		assertEquals("abs(1)", 1D);
-		assertEquals("abs(-1)", 1D);
-		assertEquals("abs(10)", 10D);
-		assertEquals("abs(10.1)", 10.1D);
-		assertEquals("ABS(-11.0)", 11D);
+		testAbs();
 		
 		//min函数
-		assertEquals("min(1)", 1D);
-		assertEquals("MIN(1)", 1D);
-		assertEquals("min(1,2)", 1D);
-		assertEquals("min(1,2,3)", 1D);
-		assertEquals("min(1,1.1,3)", 1D);
-		assertEquals("min(1,-1.1,3)", -1.1D);
-		assertEquals("min(abs(-1),1.1,3)", 1D);
-		assertEquals("min(abs(-1),aBs(1.1),min(3,4,6))", 1D);
+		testMin();
 		
 		//max函数
-		assertEquals("max(1)", 1D);
-		assertEquals("MAX(1)", 1D);
-		assertEquals("max(1,2)", 2D);
-		assertEquals("max(1,2,3)", 3D);
-		assertEquals("max(1,1.1,3)", 3D);
-		assertEquals("max(1,-1.1,3)", 3D);
-		assertEquals("max(abs(-1),1.1,3)", 3D);
-		assertEquals("max(abs(-1),aBs(1.1),max(3,4,6))", 6D);
+		testMax();
 		
 		//()函数
-		assertEquals("(1)", 1D);
-		assertEquals("((1))", 1D);
-		assertEquals("(-1)", -1D);
+		testParens();
 		
 		//+加法函数
+		testAdd();
+	}
+	
+	/**
+	 * 测试加减混合运算
+	 */
+	public static void testAddSubstract() {
+		assertEquals("(-1)+3", 2D);
+		assertEquals("3+2+1", 6D);
+		assertEquals("3+(-8)+2+1", -2D);
+		assertEquals("3-2+1", 2D);
+		assertEquals("3.5-2.2+1", 2.3D);
+		assertEquals("1-6+abs(3)+max(3,abs((-4)),abs(6))", 4D);		
+		assertEquals("3-2+10", 11D);
+	}
+	/**
+	 * 测试()运算
+	 */
+	private static void testParens() {
+		assertEquals("(1)", 1D);
+		assertEquals("((1))", 1D);
+	}
+	
+	/**
+	 * 测试加法运算
+	 */
+	private static void testAdd() {
 		assertEquals("(1+1)", 2D);
 		assertEquals("1+2", 3D);
 		assertEquals("1+ABS(2)", 3D);
@@ -60,12 +72,63 @@ public class App {
 		assertEquals("(1+4.2)", 5.2D);
 		assertEquals("1+max(1,2,3)", 4D);
 		assertEquals("1+max(1,2,ABS(3))", 4D);
-		
-		//-减法
-		assertEquals("-1", -1D);
-		assertEquals("-1.2", -1.2D);
-		assertEquals("-0", -0D);
-		assertEquals("-0.0", -0D);
+	}
+	
+	private static void testAbs() {
+		assertEquals("abs(1)", 1D);
+		assertEquals("abs((-1))", 1D);
+		assertEquals("abs(10)", 10D);
+		assertEquals("abs(10.1)", 10.1D);
+		assertEquals("ABS((-11.0))", 11D);
+	}
+	/**
+	 * min函数测试
+	 */
+	private static void testMin() {
+		assertEquals("min(1)", 1D);
+		assertEquals("MIN(1)", 1D);
+		assertEquals("min(1,2)", 1D);
+		assertEquals("min(1,2,3)", 1D);
+		assertEquals("min(1,1.1,3)", 1D);
+		assertEquals("min(1,(-1.1),3)", -1.1D);
+		assertEquals("min(abs((-1)),1.1,3)", 1D);
+		assertEquals("min(abs((-1)),aBs(1.1),min(3,4,6))", 1D);
+	}
+	
+	/**
+	 * max函数测试
+	 */
+	private static void testMax() {
+		assertEquals("max(1)", 1D);
+		assertEquals("MAX(1)", 1D);
+		assertEquals("max(1,2)", 2D);
+		assertEquals("max(1,2,3)", 3D);
+		assertEquals("max(1,1.1,3)", 3D);
+		assertEquals("max(1,(-1.1),3)", 3D);
+		assertEquals("max(abs((-1)),1.1,3)", 3D);
+		assertEquals("max(abs((-1)),aBs(1.1),max(3,4,6))", 6D);
+	}
+	
+	/**
+	 * 正数测试
+	 */
+	private static void testPositiveNumber() {
+		assertEquals("343", 343D);
+		assertEquals("3.43", 3.43D);
+		assertEquals(".343", .343D);
+		assertEquals("0343", 343D);
+		assertEquals("0", 0D);
+		assertEquals("0.0", 0D);
+		assertEquals("1", 1D);
+		assertEquals("24.13", 24.13D);
+	}
+	
+	private static void testNegativeNumber() {
+		assertEquals("(-1)", -1D);
+		assertEquals("(-1.2)", -1.2D);
+		assertEquals("(-3456)", -3456D);
+		assertEquals("(-343)", -343D);
+		assertEquals("(-3.43)", -3.43D);
 	}
 	
 	/**
