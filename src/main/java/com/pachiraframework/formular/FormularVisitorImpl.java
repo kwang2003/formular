@@ -1,5 +1,7 @@
 package com.pachiraframework.formular;
 
+import java.math.BigDecimal;
+
 import com.pachiraframework.formular.FormularParser.AbsContext;
 import com.pachiraframework.formular.FormularParser.AddContext;
 import com.pachiraframework.formular.FormularParser.DivideContext;
@@ -9,6 +11,7 @@ import com.pachiraframework.formular.FormularParser.MaxContext;
 import com.pachiraframework.formular.FormularParser.MinContext;
 import com.pachiraframework.formular.FormularParser.MultiplyContext;
 import com.pachiraframework.formular.FormularParser.NegativeContext;
+import com.pachiraframework.formular.FormularParser.RoundContext;
 import com.pachiraframework.formular.FormularParser.SubtractContext;
 
 public class FormularVisitorImpl extends FormularBaseVisitor<Double> {
@@ -95,6 +98,15 @@ public class FormularVisitorImpl extends FormularBaseVisitor<Double> {
 	public Double visitNegative(NegativeContext ctx) {
 		Double value =visit(ctx.expr());
 		return -1D*value;
+	}
+
+	@Override
+	public Double visitRound(RoundContext ctx) {
+		Double value =visit(ctx.expr());
+		String digits = ctx.INTEGER().getText();
+		BigDecimal b = new BigDecimal(value);
+		double rs = b.setScale(Integer.valueOf(digits), BigDecimal.ROUND_HALF_UP).doubleValue();
+		return rs;
 	}
 
 

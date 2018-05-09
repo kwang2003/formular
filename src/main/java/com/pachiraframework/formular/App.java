@@ -39,6 +39,59 @@ public class App {
 		
 		//+加法函数
 		testAdd();
+		
+		//*乘法
+		testMultiply();
+		
+		//-除法
+		testDivide();
+		
+		//round函数
+		testRound();
+	}
+	private static void testRound() {
+		assertEquals("round(23.7825)", 23.78D);
+		assertEquals("round(2,2)", 2.00D);
+		assertEquals("round(2.123,2)", 2.12D);
+		assertEquals("round(2.126,2)", 2.13D);
+		assertEquals("round((-2.126),2)", -2.13D);
+		assertEquals("round(abs(2.126),2)", 2.13D);
+	}
+	/**
+	 * 测试除法
+	 */
+	private static void testDivide() {
+		assertEquals("3/2", 1.5D);
+		assertEquals("3/1.5", 2D);
+		assertEquals("(-3)/1.5", -2D);
+		assertEquals("3/(-1.5)", -2D);
+		assertEquals("3/2+3", 4.5D);
+		assertEquals("3/2/1.5", 1D);
+		assertEquals("abs(3/2)", 1.5D);
+		assertEquals("1-3/2+2", 1.5D);
+		assertEquals("1+8/(2+2)-5", -2D);
+		assertEquals("18/3*4", 24D);
+		assertEquals("5*8/2", 20D);
+		assertEquals("5*8/2-18", 2D);
+		assertEquals("1+3*8/(2+2)-18/3*4", -17D);
+	}
+	
+	/**
+	 * 测试乘法
+	 */
+	private static void testMultiply() {
+		assertEquals("3*2", 6D);
+		assertEquals("3.2*2", 6.4D);
+		assertEquals("3.2*0", 0D);
+		assertEquals("3*2*5", 30D);
+		assertEquals("3*abs(2)*5", 30D);
+		assertEquals("3*2*max(5,3,2)", 30D);
+		assertEquals("1+2*3", 7D);
+		assertEquals("1+(2*3)", 7D);
+		assertEquals("(1+2)*3", 9D);
+		assertEquals("1+2*(4+6)", 21D);
+		assertEquals("1+2*(4+6)-1+10", 30D);
+		assertEquals("1+2*(4-6)-1+10", 6D);
 	}
 	
 	/**
@@ -138,7 +191,7 @@ public class App {
 	 */
 	private static void assertEquals(String formular,Double result) {
 		System.out.println("##################################");
-		System.out.println("输入表达式：");
+		System.out.print("输入表达式：");
 		System.out.println(formular);
 		System.out.println("期望结果："+result);
 		try {
