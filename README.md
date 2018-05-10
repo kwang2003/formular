@@ -5,7 +5,7 @@
     
         负数要带括号因为负号可能被解析成操作符减号
     - 示例
-    ```
+    ```java
 	private static void testNegativeNumber() {
 		assertEquals("(-1)", -1D);
 		assertEquals("(-1.2)", -1.2D);
@@ -19,7 +19,7 @@
         
         数据之间做加法运算
     - 示例
-    ```
+    ```java
     	private static void testAdd() {
     		assertEquals("(1+1)", 2D);
     		assertEquals("1+2", 3D);
@@ -35,7 +35,7 @@
         
         数字之间进行减法运算
     - 示例
-    ```
+    ```java
 	public static void testAddSubstract() {
 		assertEquals("(-1)+3", 2D);
 		assertEquals("(-1)-(-2)", 1D);
@@ -62,7 +62,7 @@
         括弧运算符包含的表达式，其结果还是表达式本身的值
     - 示例
 
-    ```
+    ```java
     	private static void testParens() {
     		assertEquals("(1)", 1D);
     		assertEquals("((1))", 1D);
@@ -73,45 +73,45 @@
         
         数值之间相乘
     - 示例
-```
-	private static void testMultiply() {
-		assertEquals("3*2", 6D);
-		assertEquals("3.2*2", 6.4D);
-		assertEquals("3.2*0", 0D);
-		assertEquals("3*2*5", 30D);
-		assertEquals("3*abs(2)*5", 30D);
-		assertEquals("3*2*max(5,3,2)", 30D);
-		assertEquals("1+2*3", 7D);
-		assertEquals("1+(2*3)", 7D);
-		assertEquals("(1+2)*3", 9D);
-		assertEquals("1+2*(4+6)", 21D);
-		assertEquals("1+2*(4+6)-1+10", 30D);
-		assertEquals("1+2*(4-6)-1+10", 6D);
-	}
-```
+    ```java
+    	private static void testMultiply() {
+    		assertEquals("3*2", 6D);
+    		assertEquals("3.2*2", 6.4D);
+    		assertEquals("3.2*0", 0D);
+    		assertEquals("3*2*5", 30D);
+    		assertEquals("3*abs(2)*5", 30D);
+    		assertEquals("3*2*max(5,3,2)", 30D);
+    		assertEquals("1+2*3", 7D);
+    		assertEquals("1+(2*3)", 7D);
+    		assertEquals("(1+2)*3", 9D);
+    		assertEquals("1+2*(4+6)", 21D);
+    		assertEquals("1+2*(4+6)-1+10", 30D);
+    		assertEquals("1+2*(4-6)-1+10", 6D);
+    	}
+    ```
 - 除法运算
     - 说明
     
         数值之间除法运算
     - 示例
-```
-	private static void testDivide() {
-		assertEquals("3/2", 1.5D);
-		assertEquals("(-3)/(-2)", 1.5D);
-		assertEquals("3/1.5", 2D);
-		assertEquals("(-3)/1.5", -2D);
-		assertEquals("3/(-1.5)", -2D);
-		assertEquals("3/2+3", 4.5D);
-		assertEquals("3/2/1.5", 1D);
-		assertEquals("abs(3/2)", 1.5D);
-		assertEquals("1-3/2+2", 1.5D);
-		assertEquals("1+8/(2+2)-5", -2D);
-		assertEquals("18/3*4", 24D);
-		assertEquals("5*8/2", 20D);
-		assertEquals("5*8/2-18", 2D);
-		assertEquals("1+3*8/(2+2)-18/3*4", -17D);
-	}
-```
+    ```java
+    	private static void testDivide() {
+    		assertEquals("3/2", 1.5D);
+    		assertEquals("(-3)/(-2)", 1.5D);
+    		assertEquals("3/1.5", 2D);
+    		assertEquals("(-3)/1.5", -2D);
+    		assertEquals("3/(-1.5)", -2D);
+    		assertEquals("3/2+3", 4.5D);
+    		assertEquals("3/2/1.5", 1D);
+    		assertEquals("abs(3/2)", 1.5D);
+    		assertEquals("1-3/2+2", 1.5D);
+    		assertEquals("1+8/(2+2)-5", -2D);
+    		assertEquals("18/3*4", 24D);
+    		assertEquals("5*8/2", 20D);
+    		assertEquals("5*8/2-18", 2D);
+    		assertEquals("1+3*8/(2+2)-18/3*4", -17D);
+    	}
+    ```
 
 - [ABS 函数](https://support.office.com/zh-cn/article/abs-%E5%87%BD%E6%95%B0-3420200f-5628-4e8c-99da-c99d7c87713c)
 	- 说明
@@ -127,7 +127,7 @@
 
 	- 示例
 
-    ```
+    ```java
     	private static void testAbs() {
     		assertEquals("abs(1)", 1D);
     		assertEquals("abs((-1))", 1D);
@@ -150,7 +150,7 @@
 		- **number1, number2, ...**    Number1 是必需的，后续数字是可选的。 要从中查找最大值的 1 到 255 个数字。
 
 	- 示例
-    ```
+    ```java
     	/**
     	 * max函数测试
     	 */
