@@ -1,5 +1,118 @@
 ### 概述
 基于antlr4实现Excel公式计算功能,目前已经实现的函数操作：
+- 负数(-)
+    - 说明
+    
+        负数要带括号因为负号可能被解析成操作符减号
+    - 示例
+    ```
+	private static void testNegativeNumber() {
+		assertEquals("(-1)", -1D);
+		assertEquals("(-1.2)", -1.2D);
+		assertEquals("(-3456)", -3456D);
+		assertEquals("(-343)", -343D);
+		assertEquals("(-3.43)", -3.43D);
+	}
+    ```
+- 加法运算+
+    - 说明
+        
+        数据之间做加法运算
+    - 示例
+    ```
+    	private static void testAdd() {
+    		assertEquals("(1+1)", 2D);
+    		assertEquals("1+2", 3D);
+    		assertEquals("1+ABS(2)", 3D);
+    		assertEquals("(1)+(2)", 3D);
+    		assertEquals("(1+4.2)", 5.2D);
+    		assertEquals("1+max(1,2,3)", 4D);
+    		assertEquals("1+max(1,2,ABS(3))", 4D);
+    	}
+    ```
+- 减法运算-
+    - 说明
+        
+        数字之间进行减法运算
+    - 示例
+    ```
+	public static void testAddSubstract() {
+		assertEquals("(-1)+3", 2D);
+		assertEquals("(-1)-(-2)", 1D);
+		assertEquals("3+2+1", 6D);
+		assertEquals("3+(-8)+2+1", -2D);
+		assertEquals("3-2+1", 2D);
+		assertEquals("3.5-2.2+1", 2.3D);
+		assertEquals("1-6+abs(3)+max(3,abs((-4)),abs(6))", 4D);		
+		assertEquals("3-2+10", 11D);
+	}
+	private static void testAdd() {
+		assertEquals("(1+1)", 2D);
+		assertEquals("1+2", 3D);
+		assertEquals("1+ABS(2)", 3D);
+		assertEquals("(1)+(2)", 3D);
+		assertEquals("(1+4.2)", 5.2D);
+		assertEquals("1+max(1,2,3)", 4D);
+		assertEquals("1+max(1,2,ABS(3))", 4D);
+	}
+    ```
+- 括弧运算符()
+    - 说明
+        
+        括弧运算符包含的表达式，其结果还是表达式本身的值
+    - 示例
+
+    ```
+    	private static void testParens() {
+    		assertEquals("(1)", 1D);
+    		assertEquals("((1))", 1D);
+    	}
+    ```
+- 乘法运算*
+    - 说明
+        
+        数值之间相乘
+    - 示例
+```
+	private static void testMultiply() {
+		assertEquals("3*2", 6D);
+		assertEquals("3.2*2", 6.4D);
+		assertEquals("3.2*0", 0D);
+		assertEquals("3*2*5", 30D);
+		assertEquals("3*abs(2)*5", 30D);
+		assertEquals("3*2*max(5,3,2)", 30D);
+		assertEquals("1+2*3", 7D);
+		assertEquals("1+(2*3)", 7D);
+		assertEquals("(1+2)*3", 9D);
+		assertEquals("1+2*(4+6)", 21D);
+		assertEquals("1+2*(4+6)-1+10", 30D);
+		assertEquals("1+2*(4-6)-1+10", 6D);
+	}
+```
+- 除法运算
+    - 说明
+    
+        数值之间除法运算
+    - 示例
+```
+	private static void testDivide() {
+		assertEquals("3/2", 1.5D);
+		assertEquals("(-3)/(-2)", 1.5D);
+		assertEquals("3/1.5", 2D);
+		assertEquals("(-3)/1.5", -2D);
+		assertEquals("3/(-1.5)", -2D);
+		assertEquals("3/2+3", 4.5D);
+		assertEquals("3/2/1.5", 1D);
+		assertEquals("abs(3/2)", 1.5D);
+		assertEquals("1-3/2+2", 1.5D);
+		assertEquals("1+8/(2+2)-5", -2D);
+		assertEquals("18/3*4", 24D);
+		assertEquals("5*8/2", 20D);
+		assertEquals("5*8/2-18", 2D);
+		assertEquals("1+3*8/(2+2)-18/3*4", -17D);
+	}
+```
+
 - [ABS 函数](https://support.office.com/zh-cn/article/abs-%E5%87%BD%E6%95%B0-3420200f-5628-4e8c-99da-c99d7c87713c)
 	- 说明
 		
@@ -14,9 +127,15 @@
 
 	- 示例
 
-		ABS(2) 2 的绝对值。
-
-		ABS(-2) -2 的绝对值
+    ```
+    	private static void testAbs() {
+    		assertEquals("abs(1)", 1D);
+    		assertEquals("abs((-1))", 1D);
+    		assertEquals("abs(10)", 10D);
+    		assertEquals("abs(10.1)", 10.1D);
+    		assertEquals("ABS((-11.0))", 11D);
+    	}
+    ```
 
 - [MAX 函数](https://support.office.com/zh-cn/article/max-%E5%87%BD%E6%95%B0-e0012414-9ac8-4b34-9a47-73e662c08098)
 	- 说明
@@ -31,11 +150,22 @@
 		- **number1, number2, ...**    Number1 是必需的，后续数字是可选的。 要从中查找最大值的 1 到 255 个数字。
 
 	- 示例
+    ```
+    	/**
+    	 * max函数测试
+    	 */
+    	private static void testMax() {
+    		assertEquals("max(1)", 1D);
+    		assertEquals("MAX(1)", 1D);
+    		assertEquals("max(1,2)", 2D);
+    		assertEquals("max(1,2,3)", 3D);
+    		assertEquals("max(1,1.1,3)", 3D);
+    		assertEquals("max(1,(-1.1),3)", 3D);
+    		assertEquals("max(abs((-1)),1.1,3)", 3D);
+    		assertEquals("max(abs((-1)),aBs(1.1),max(3,4,6))", 6D);
+    	}
+    ```
 
-
-		MAX(A2,A6) A2,A6 中的最大值。
-
-		MAX(123,2345,1235,199)
 - [MIN 函数](https://support.office.com/zh-cn/article/min-%E5%87%BD%E6%95%B0-61635d12-920f-4ce2-a70f-96f202dcc152)
 	- 说明
 		
@@ -50,9 +180,22 @@
 
 	- 示例
 
-		MIN(A2,A6) A2,A6 中的最小值。
+    ```java
+    	/**
+    	 * min函数测试
+    	 */
+    	private static void testMin() {
+    		assertEquals("min(1)", 1D);
+    		assertEquals("MIN(1)", 1D);
+    		assertEquals("min(1,2)", 1D);
+    		assertEquals("min(1,2,3)", 1D);
+    		assertEquals("min(1,1.1,3)", 1D);
+    		assertEquals("min(1,(-1.1),3)", -1.1D);
+    		assertEquals("min(abs((-1)),1.1,3)", 1D);
+    		assertEquals("min(abs((-1)),aBs(1.1),min(3,4,6))", 1D);
+    	}
+    ```
 
-		MIN(123,2345,1235,199)
 - [ROUND 函数](https://support.office.com/zh-cn/article/round-%E5%87%BD%E6%95%B0-c018c5d8-40fb-4053-90b1-b3e7f61a213c)
     - 说明
          
@@ -78,14 +221,17 @@
         - 若要将某个数字四舍五入为指定的倍数（例如，四舍五入为最接近的 0.5 倍），请使用 MROUND 函数。
     - 示例
         
-        |公式|结果
-        |:-|:-
-        |round(23.7825)|23.78
-        |round(2,2)|2.2
-        |round(2.123,2)|2.12
-        |round(2.126,2)|2.13
-        |round((-2.126),2)|-2.13
-        |round(abs(2.126),2)|2.13
+    ```java
+    	private static void testRound() {
+    		assertEquals("round(23.7825)", 23.78D);
+    		assertEquals("round(2,2)", 2.00D);
+    		assertEquals("round(2.123,2)", 2.12D);
+    		assertEquals("round(2.126,2)", 2.13D);
+    		assertEquals("round((-2.126),2)", -2.13D);
+    		assertEquals("round(abs(2.126),2)", 2.13D);
+    	}
+    ```
+
 
 ### 运行环境
 - jdk1.8
@@ -348,5 +494,7 @@ public class App {
 
 }
 
-
 ```
+
+参考资料
+- [Excel 函数（按字母顺序）](https://support.office.com/zh-cn/article/excel-%e5%87%bd%e6%95%b0%ef%bc%88%e6%8c%89%e5%ad%97%e6%af%8d%e9%a1%ba%e5%ba%8f%ef%bc%89-b3944572-255d-4efb-bb96-c6d90033e188?ui=zh-CN&rs=zh-CN&ad=CN#bm18)

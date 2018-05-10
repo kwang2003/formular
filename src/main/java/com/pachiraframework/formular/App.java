@@ -50,7 +50,7 @@ public class App {
 		testRound();
 	}
 	private static void testRound() {
-		assertEquals("round(23.7825)", 23.78D);
+		assertEquals("round(23.7825,2)", 23.78D);
 		assertEquals("round(2,2)", 2.00D);
 		assertEquals("round(2.123,2)", 2.12D);
 		assertEquals("round(2.126,2)", 2.13D);
@@ -62,6 +62,7 @@ public class App {
 	 */
 	private static void testDivide() {
 		assertEquals("3/2", 1.5D);
+		assertEquals("(-3)/(-2)", 1.5D);
 		assertEquals("3/1.5", 2D);
 		assertEquals("(-3)/1.5", -2D);
 		assertEquals("3/(-1.5)", -2D);
@@ -99,6 +100,7 @@ public class App {
 	 */
 	public static void testAddSubstract() {
 		assertEquals("(-1)+3", 2D);
+		assertEquals("(-1)-(-2)", 1D);
 		assertEquals("3+2+1", 6D);
 		assertEquals("3+(-8)+2+1", -2D);
 		assertEquals("3-2+1", 2D);
