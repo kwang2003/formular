@@ -48,7 +48,29 @@ public class App {
 		
 		//round函数
 		testRound();
+		
+		//if函数
+		testIf();
 	}
+	
+	/**
+	 * 测试if函数
+	 */
+	private static void testIf() {
+		assertEquals("IF(1>2,3,4)", 4D);
+		assertEquals("IF(1<2,3,4)", 3D);
+		assertEquals("IF(1=1,1,4)", 1D);
+		assertEquals("IF(1>=1,1,4)", 1D);
+		assertEquals("IF(1>=1.1,1,8)", 8D);
+		assertEquals("IF(1+2>=1,1,4)", 1D);
+		assertEquals("IF(1-2>=1,1,4)", 4D);
+		assertEquals("IF(3/(-1.5)>0,abs(1.5),min(5,6))", 5D);
+		assertEquals("IF(1+3*8/(2+2)-18/3*4>2,3,4)", 4D);
+		assertEquals("IF(1<>2,3,4)", 3D);
+		assertEquals("IF(1<>1,3,4)", 4D);
+		assertEquals("IF(1>2,3,IF(2>4,6,7))", 7D);
+	}
+	
 	private static void testRound() {
 		assertEquals("round(23.7825,2)", 23.78D);
 		assertEquals("round(2,2)", 2.00D);
@@ -197,7 +219,8 @@ public class App {
 		System.out.println(formular);
 		System.out.println("期望结果："+result);
 		try {
-			Double actual = FormularCompiler.compile(formular);
+			ValueWrapper value = FormularCompiler.compile(formular);
+			Double actual = value.doubleValue();
 			System.out.println("实际结果："+actual);
 			System.out.println("是否匹配："+actual.equals(result));
 			if(!actual.equals(result)) {
