@@ -642,6 +642,117 @@ function setDocumentScrollTop(ypos)
 <h3> <a id="概述" class="anchor" href="#%E6%A6%82%E8%BF%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>概述</h3> 
 <p>基于antlr4实现Excel公式计算功能,目前已经实现的函数操作：</p> 
 <ul> 
+ <li> <p>负数(-)</p> 
+  <ul> 
+   <li> <p>说明</p> <p>负数要带括号因为负号可能被解析成操作符减号</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre><span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testNegativeNumber() {
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-1)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">1D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-1.2)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">1.2D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-3456)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">3456D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-343)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">343D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-3.43)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">3.43D</span>);
+}</pre>
+  </div> </li> 
+ <li> <p>加法运算+</p> 
+  <ul> 
+   <li> <p>说明</p> <p>数据之间做加法运算</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testAdd() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1+1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+ABS(2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1)+(2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1+4.2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">5.2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+max(1,2,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+max(1,2,ABS(3))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+	}</pre>
+  </div> </li> 
+ <li> <p>减法运算-</p> 
+  <ul> 
+   <li> <p>说明</p> <p>数字之间进行减法运算</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre><span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testAddSubstract() {
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-1)+3<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-1)-(-2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3+2+1<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">6D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3+(-8)+2+1<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">2D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3-2+1<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3.5-2.2+1<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2.3D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1-6+abs(3)+max(3,abs((-4)),abs(6))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);		
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3-2+10<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">11D</span>);
+}
+<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testAdd() {
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1+1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+ABS(2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1)+(2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1+4.2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">5.2D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+max(1,2,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+	assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+max(1,2,ABS(3))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+}</pre>
+  </div> </li> 
+ <li> <p>括弧运算符()</p> 
+  <ul> 
+   <li> <p>说明</p> <p>括弧运算符包含的表达式，其结果还是表达式本身的值</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testParens() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>((1))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+	}</pre>
+  </div> </li> 
+ <li> <p>乘法运算*</p> 
+  <ul> 
+   <li> <p>说明</p> <p>数值之间相乘</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testMultiply() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3*2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">6D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3.2*2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">6.4D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3.2*0<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">0D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3*2*5<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">30D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3*abs(2)*5<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">30D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3*2*max(5,3,2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">30D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+2*3<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">7D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+(2*3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">7D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(1+2)*3<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">9D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+2*(4+6)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">21D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+2*(4+6)-1+10<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">30D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+2*(4-6)-1+10<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">6D</span>);
+	}</pre>
+  </div> </li> 
+ <li> <p>除法运算</p> 
+  <ul> 
+   <li> <p>说明</p> <p>数值之间除法运算</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testDivide() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3/2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1.5D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-3)/(-2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1.5D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3/1.5<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>(-3)/1.5<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3/(-1.5)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3/2+3<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4.5D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>3/2/1.5<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>abs(3/2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1.5D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1-3/2+2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1.5D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+8/(2+2)-5<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>18/3*4<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">24D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>5*8/2<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">20D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>5*8/2-18<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>1+3*8/(2+2)-18/3*4<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">17D</span>);
+	}</pre>
+  </div> </li> 
  <li> <p><a href="https://support.office.com/zh-cn/article/abs-%E5%87%BD%E6%95%B0-3420200f-5628-4e8c-99da-c99d7c87713c" rel="nofollow">ABS 函数</a></p> 
   <ul> 
    <li> <p>说明</p> <p>取绝对值</p> </li> 
@@ -649,8 +760,17 @@ function setDocumentScrollTop(ypos)
     <ul> 
      <li> <strong>number</strong> 必需。 需要计算其绝对值的实数。</li> 
     </ul> </li> 
-   <li> <p>示例</p> <p>ABS(2) 2 的绝对值。</p> <p>ABS(-2) -2 的绝对值</p> </li> 
-  </ul> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testAbs() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>abs(1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>abs((-1))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>abs(10)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">10D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>abs(10.1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">10.1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>ABS((-11.0))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">11D</span>);
+	}</pre>
+  </div> </li> 
  <li> <p><a href="https://support.office.com/zh-cn/article/max-%E5%87%BD%E6%95%B0-e0012414-9ac8-4b34-9a47-73e662c08098" rel="nofollow">MAX 函数</a></p> 
   <ul> 
    <li> <p>说明</p> <p>返回一组值中的最大值。</p> </li> 
@@ -658,8 +778,23 @@ function setDocumentScrollTop(ypos)
     <ul> 
      <li> <strong>number1, number2, ...</strong> Number1 是必需的，后续数字是可选的。 要从中查找最大值的 1 到 255 个数字。</li> 
     </ul> </li> 
-   <li> <p>示例</p> <p>MAX(A2,A6) A2,A6 中的最大值。</p> <p>MAX(123,2345,1235,199)</p> </li> 
-  </ul> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-c"><span class="pl-c">/**</span></span>
+<span class="pl-c">	 * max函数测试</span>
+<span class="pl-c">	 <span class="pl-c">*/</span></span>
+	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testMax() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>MAX(1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(1,2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(1,2,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(1,1.1,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(1,(-1.1),3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(abs((-1)),1.1,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>max(abs((-1)),aBs(1.1),max(3,4,6))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">6D</span>);
+	}</pre>
+  </div> </li> 
  <li> <p><a href="https://support.office.com/zh-cn/article/min-%E5%87%BD%E6%95%B0-61635d12-920f-4ce2-a70f-96f202dcc152" rel="nofollow">MIN 函数</a></p> 
   <ul> 
    <li> <p>说明</p> <p>返回一组值中的最小值。</p> </li> 
@@ -667,8 +802,77 @@ function setDocumentScrollTop(ypos)
     <ul> 
      <li> <strong>number1, number2, ...</strong> Number1 是必需的，后续数字是可选的。 要从中查找最小值的 1 到 255 个数字。</li> 
     </ul> </li> 
-   <li> <p>示例</p> <p>MIN(A2,A6) A2,A6 中的最小值。</p> <p>MIN(123,2345,1235,199)</p> </li> 
-  </ul> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-c"><span class="pl-c">/**</span></span>
+<span class="pl-c">	 * min函数测试</span>
+<span class="pl-c">	 <span class="pl-c">*/</span></span>
+	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testMin() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>MIN(1)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(1,2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(1,2,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(1,1.1,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(1,(-1.1),3)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">1.1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(abs((-1)),1.1,3)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>min(abs((-1)),aBs(1.1),min(3,4,6))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+	}</pre>
+  </div> </li> 
+ <li> <p><a href="https://support.office.com/zh-cn/article/round-%E5%87%BD%E6%95%B0-c018c5d8-40fb-4053-90b1-b3e7f61a213c" rel="nofollow">ROUND 函数</a></p> 
+  <ul> 
+   <li> <p>说明</p> <p>ROUND 函数将数字四舍五入到指定的位数。 例如，如果单元格 A1 包含 23.7825，而且您想要将此数值舍入到两个小数位数，可以使用以下公式：</p> <p>=ROUND(A1, 2)</p> <p>此函数的结果为 23.78。</p> </li> 
+   <li> <p>语法</p> <p>ROUND(number, num_digits)</p> <p>ROUND 函数语法具有下列参数：</p> 
+    <ul> 
+     <li> <strong>number</strong> 必需。 要四舍五入的数字。</li> 
+     <li> <strong>num_digits</strong> 必需。 要进行四舍五入运算的位数。</li> 
+    </ul> </li> 
+   <li> <p>备注</p> 
+    <ul> 
+     <li>如果 num_digits 大于 0（零），则将数字四舍五入到指定的小数位数。</li> 
+     <li>如果 num_digits 等于 0，则将数字四舍五入到最接近的整数。</li> 
+     <li><del>如果 num_digits 小于 0，则将数字四舍五入到小数点左边的相应位数。（暂不支持）</del></li> 
+     <li>若要始终进行向上舍入（远离 0），请使用 ROUNDUP 函数。</li> 
+     <li>若要始终进行向下舍入（朝向 0），请使用 ROUNDDOWN 函数。</li> 
+     <li>若要将某个数字四舍五入为指定的倍数（例如，四舍五入为最接近的 0.5 倍），请使用 MROUND 函数。</li> 
+    </ul> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testRound() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>round(23.7825)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">23.78D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>round(2,2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2.00D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>round(2.123,2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2.12D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>round(2.126,2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2.13D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>round((-2.126),2)<span class="pl-pds">&quot;</span></span>, <span class="pl-k">-</span><span class="pl-c1">2.13D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>round(abs(2.126),2)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">2.13D</span>);
+	}</pre>
+  </div> </li> 
+ <li> <p><a href="https://support.office.com/zh-cn/article/if-%E5%87%BD%E6%95%B0-69aed7c9-4e8a-4755-a9bc-aa8bbff73be2" rel="nofollow">IF 函数</a></p> 
+  <ul> 
+   <li> <p>说明 对值和期待值进行逻辑比较。IF 函数最简单的形式表示：</p> 
+    <ul> 
+     <li>如果（内容为 True，则执行某些操作，否则就执行其他操作）</li> 
+    </ul> </li> 
+   <li> <p>语法</p> <p>IF(logical_test, value_if_true, value_if_false)</p> </li> 
+   <li> <p>示例</p> </li> 
+  </ul> 
+  <div class="highlight highlight-source-java">
+   <pre>	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> testIf() {
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&gt;2,3,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&lt;2,3,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1=1,1,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&gt;=1,1,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&gt;=1.1,1,8)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">8D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1+2&gt;=1,1,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1-2&gt;=1,1,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(3/(-1.5)&gt;0,abs(1.5),min(5,6))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">5D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1+3*8/(2+2)-18/3*4&gt;2,3,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&lt;&gt;2,3,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">3D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&lt;&gt;1,3,4)<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">4D</span>);
+		assertEquals(<span class="pl-s"><span class="pl-pds">&quot;</span>IF(1&gt;2,3,IF(2&gt;4,6,7))<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">7D</span>);
+	}</pre>
+  </div> </li> 
 </ul> 
 <h3> <a id="运行环境" class="anchor" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>运行环境</h3> 
 <ul> 
@@ -711,6 +915,12 @@ function setDocumentScrollTop(ypos)
 		&lt;/plugin&gt;
 	&lt;/plugins&gt;
 &lt;/build&gt;
-</code></pre>
+</code></pre> 
+<h4> <a id="测试结果" class="anchor" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>测试结果</h4> 
+<p>测试用例位于 <strong>com.pachiraframework.formular.App.main()</strong> 方法中</p> 
+<p>参考资料</p> 
+<ul> 
+ <li><a href="https://support.office.com/zh-cn/article/excel-%e5%87%bd%e6%95%b0%ef%bc%88%e6%8c%89%e5%ad%97%e6%af%8d%e9%a1%ba%e5%ba%8f%ef%bc%89-b3944572-255d-4efb-bb96-c6d90033e188?ui=zh-CN&amp;rs=zh-CN&amp;ad=CN#bm18" rel="nofollow">Excel 函数（按字母顺序）</a></li> 
+</ul>
 </body>
 </html>

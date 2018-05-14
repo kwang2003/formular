@@ -51,6 +51,16 @@ public class App {
 		
 		//if函数
 		testIf();
+		
+		//or函数
+		testOr();
+	}
+	
+	private static void testOr() {
+		assertEquals("OR(1>2)", false);
+		assertEquals("OR(FALSE,TRUE)", true);
+		assertEquals("OR(1>2,TRue)", true);
+		assertEquals("OR(FALSE,OR(3>2))", true);
 	}
 	
 	/**
@@ -208,29 +218,48 @@ public class App {
 		assertEquals("(-3.43)", -3.43D);
 	}
 	
+	
+	private static ValueWrapper beforeAssert(String formular,Object result) throws Exception{
+		System.out.println("##################################");
+		System.out.print("输入表达式：");
+		System.out.println(formular);
+		System.out.println("期望结果："+result);
+		return FormularCompiler.compile(formular);
+	}
+	
+	private static void afterAssert(Object expected,Object actual) {
+		System.out.println("实际结果："+actual);
+		System.out.println("是否匹配："+actual.equals(expected));
+		if(!actual.equals(expected)) {
+			throw new IllegalArgumentException("不匹配，期望值："+expected+",实际值:"+actual);
+		}
+		System.out.println();
+	}
+	
 	/**
 	 * 测试用例，对输入的表达式做断言判断
 	 * @param formular 表达式
 	 * @param result	期望结果
 	 */
 	private static void assertEquals(String formular,Double result) {
-		System.out.println("##################################");
-		System.out.print("输入表达式：");
-		System.out.println(formular);
-		System.out.println("期望结果："+result);
 		try {
-			ValueWrapper value = FormularCompiler.compile(formular);
+			ValueWrapper value = beforeAssert(formular, result);
 			Double actual = value.doubleValue();
-			System.out.println("实际结果："+actual);
-			System.out.println("是否匹配："+actual.equals(result));
-			if(!actual.equals(result)) {
-				throw new IllegalArgumentException("不匹配，期望值："+result+",实际值:"+actual);
-			}
+			afterAssert(result, actual);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println();
+	}
+	
+	private static void assertEquals(String formular,Boolean result) {
+		try {
+			ValueWrapper value = beforeAssert(formular, result);
+			Boolean actual = value.booleanValue();
+			afterAssert(result, actual);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

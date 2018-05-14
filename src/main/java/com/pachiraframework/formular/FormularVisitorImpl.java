@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 
 import com.pachiraframework.formular.FormularParser.AbsContext;
 import com.pachiraframework.formular.FormularParser.AddContext;
+import com.pachiraframework.formular.FormularParser.AndContext;
+import com.pachiraframework.formular.FormularParser.BooleanContext;
+import com.pachiraframework.formular.FormularParser.ComparatorContext;
 import com.pachiraframework.formular.FormularParser.DivideContext;
 import com.pachiraframework.formular.FormularParser.FloatContext;
 import com.pachiraframework.formular.FormularParser.IfContext;
@@ -12,6 +15,7 @@ import com.pachiraframework.formular.FormularParser.MaxContext;
 import com.pachiraframework.formular.FormularParser.MinContext;
 import com.pachiraframework.formular.FormularParser.MultiplyContext;
 import com.pachiraframework.formular.FormularParser.NegativeContext;
+import com.pachiraframework.formular.FormularParser.OrContext;
 import com.pachiraframework.formular.FormularParser.RoundContext;
 import com.pachiraframework.formular.FormularParser.SubtractContext;
 
@@ -113,6 +117,44 @@ public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 
 	@Override
 	public ValueWrapper visitIf(IfContext ctx) {
+		ValueWrapper booleanResult = visit(ctx.booleanValue());
+		return booleanResult.booleanValue() ? visit(ctx.expr(0)):visit(ctx.expr(1));
+	}
+
+
+	@Override
+	public ValueWrapper visitBoolean(BooleanContext ctx) {
+		String text = ctx.getText();
+		return ValueWrapper.of(Boolean.valueOf(text));
+	}
+
+
+	@Override
+	public ValueWrapper visitAnd(AndContext ctx) {
+		int size = ctx.booleanValue().size();
+		for(int i =0;i < size; i++) {
+			ValueWrapper value = visit(ctx.booleanValue(i));
+			if(!value.booleanValue()) {
+				return value;
+			}
+		}
+		return ValueWrapper.of(true);
+	}
+
+	@Override
+	public ValueWrapper visitOr(OrContext ctx) {
+		int size = ctx.booleanValue().size();
+		for(int i =0;i < size; i++) {
+			ValueWrapper value = visit(ctx.booleanValue(i));
+			if(value.booleanValue()) {
+				return value;
+			}
+		}
+		return ValueWrapper.of(false);
+	}
+
+	@Override
+	public ValueWrapper visitComparator(ComparatorContext ctx) {
 		String op = ctx.op.getText();
 		OperatorEnum operator = OperatorEnum.of(op);
 		ValueWrapper one = visit(ctx.expr(0));
@@ -144,10 +186,9 @@ public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 				break;
 			}
 		}
-		return rs ? visit(ctx.expr(2)):visit(ctx.expr(3));
+		return ValueWrapper.of(rs);
 	}
 
-	
 	private enum OperatorEnum{
 		EQUAL("="),LESS_THAN("<"),GREATER_THAT(">"),EQUAL_OR_LESS_THAN("<="),EQUAL_OR_GREATER_THAN(">="),NOT_EQUAL("<>");
 		private String operator;
