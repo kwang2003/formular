@@ -54,13 +54,24 @@ public class App {
 		
 		//or函数
 		testOr();
+		
+		//and 函数
+		testAnd();
+	}
+	
+	
+	private static void testAnd() {
+		assertEquals("if(And(3>4,1>2),1,2)", 2D);
+		assertEquals("if(And(FALSE,TRUE),10,2)", 2D);
+		assertEquals("if(And(1>2,TRue),1,2)", 2D);
+		assertEquals("IF(And(FALSE,OR(3>2)),3,2)", 2D);
 	}
 	
 	private static void testOr() {
-		assertEquals("OR(1>2)", false);
-		assertEquals("OR(FALSE,TRUE)", true);
-		assertEquals("OR(1>2,TRue)", true);
-		assertEquals("OR(FALSE,OR(3>2))", true);
+		assertEquals("if(OR(3>4,1>2),1,2)", 2D);
+		assertEquals("if(OR(FALSE,TRUE),10,2)", 10D);
+		assertEquals("if(OR(1>2,TRue),1,2)", 1D);
+		assertEquals("IF(OR(FALSE,OR(3>2)),3,2)", 3D);
 	}
 	
 	/**

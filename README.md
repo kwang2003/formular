@@ -255,7 +255,37 @@
     		assertEquals("IF(1>2,3,IF(2>4,6,7))", 7D);
     	}
     ```
+- [OR 函数](https://support.office.com/zh-cn/article/or-%E5%87%BD%E6%95%B0-7d17ad14-8700-4281-b308-00b131e22af0)
+    - 说明
 
+        使用 OR 函数，它是一个逻辑函数，用于确定测试中的所有条件是否均为 TRUE。
+    - 语法
+        IF(OR(A2>1,A2<100),100,50)
+    - 示例
+    ```java
+    	private static void testOr() {
+    		assertEquals("if(OR(3>4,1>2),1,2)", 2D);
+    		assertEquals("if(OR(FALSE,TRUE),10,2)", 10D);
+    		assertEquals("if(OR(1>2,TRue),1,2)", 1D);
+    		assertEquals("IF(OR(FALSE,OR(3>2)),3,2)", 3D);
+    	}
+    ```
+- [AND 函数](https://support.office.com/zh-cn/article/and-%E5%87%BD%E6%95%B0-5f19b2e8-e1df-4408-897a-ce285a19e9d9)
+    - 说明
+
+        使用 AND 函数，它是一个逻辑函数，用于确定测试中的所有条件是否均为 TRUE。
+    - 语法
+        IF(AND(A2>1,A2<100),100,50)
+    - 示例
+    ```java
+    	private static void testAnd() {
+    		assertEquals("if(And(3>4,1>2),1,2)", 2D);
+    		assertEquals("if(And(FALSE,TRUE),10,2)", 2D);
+    		assertEquals("if(And(1>2,TRue),1,2)", 2D);
+    		assertEquals("IF(And(FALSE,OR(3>2)),3,2)", 2D);
+    	}
+    ```
+        
 ### 运行环境
 - jdk1.8
 - antlr4 4.5,antlr4-maven-plugin 4.5
