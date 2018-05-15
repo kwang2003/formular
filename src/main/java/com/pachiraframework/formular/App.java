@@ -57,8 +57,60 @@ public class App {
 		
 		//and 函数
 		testAnd();
+		
+		//average函数
+		testAverage();
+		
+		//power 幂函数
+		testPower();
+		
+		//pi 函数
+		testPi();
+		
+		//sin 正弦函数
+		testSin();
+		
+		//cos 余弦函数
+		testCos();
 	}
 	
+	private static void testPi() {
+		assertEquals("pi()", Math.PI);
+		assertEquals("PI()*(3^2)", 28.274333882308138);//圆的面积
+	}
+	
+	private static void testSin() {
+		assertEquals("sin(0)", 0D);
+		assertEquals("sin(min(3,0,5))", 0D);
+	}
+	
+	private static void testCos() {
+		assertEquals("cos(0)", 1D);
+		assertEquals("cos(min(3,0,5))", 1D);
+	}
+	
+	public static void testPower() {
+		assertEquals("5^2", 25D);
+		assertEquals("2^10", 1024D);
+		assertEquals("6^2/4", 9D);
+		assertEquals("2+5^2", 27D);
+		assertEquals("POWER(5,2)", 25D);
+		assertEquals("POWER(1,2)", 1D);
+		assertEquals("POWER(3,3)", 27D);
+		assertEquals("POWER(max(4,5,3),2)", 25D);
+		assertEquals("POWER(5+2,2)", 49D);
+		assertEquals("POWER(5-2*2+1,2)", 4D);
+	}
+	
+	public static void testAverage() {
+		assertEquals("Average(3)", 3D);
+		assertEquals("Average(3,3)", 3D);
+		assertEquals("Average(2,4)", 3D);
+		assertEquals("Average(3.4,2.6)", 3D);
+		assertEquals("Average(3,average(3))", 3D);
+		assertEquals("Average(3+3,2)", 4D);
+		assertEquals("Average(max(3,4,5),7)", 6D);
+	}
 	
 	private static void testAnd() {
 		assertEquals("if(And(3>4,1>2),1,2)", 2D);
@@ -263,14 +315,14 @@ public class App {
 		
 	}
 	
-	private static void assertEquals(String formular,Boolean result) {
-		try {
-			ValueWrapper value = beforeAssert(formular, result);
-			Boolean actual = value.booleanValue();
-			afterAssert(result, actual);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	private static void assertEquals(String formular,Boolean result) {
+//		try {
+//			ValueWrapper value = beforeAssert(formular, result);
+//			Boolean actual = value.booleanValue();
+//			afterAssert(result, actual);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 }

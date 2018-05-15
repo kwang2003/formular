@@ -1,6 +1,7 @@
 grammar Formular;
 expr
-	: expr '/' expr																# Divide
+	: expr '^' expr																# Power
+	| expr '/' expr																# Divide
 	| expr '*' expr																# Multiply
     | expr '-' expr																# Subtract
     | expr '+' expr																# Add
@@ -8,11 +9,16 @@ expr
     | INTEGER				 													# Integer
     | '(-'expr')' 			 													# Negative
     | '('expr')'             													# Parens
-    | IF'(' booleanValue ',' expr ',' expr ')'						# If
+    | IF'(' booleanValue ',' expr ',' expr ')'									# If
+    | POWER'('expr ',' expr')'													# Power
     | ABS'('expr')'                     										# Abs
     | MAX'('expr (','expr)*')'													# Max
     | MIN'('expr (','expr)*')'													# Min
     | ROUND'('expr ',' INTEGER')'												# Round
+    | AVERAGE'('expr (','expr)*')'												# Average
+    | SIN'('expr')'																# Sin
+    | COS'('expr')'																# Cos
+    | PI'()'																	# Pi
 ;											
 
 booleanValue
@@ -30,6 +36,11 @@ ROUND								:[rR][oO][uU][nN][dD];						//函数将数字四舍五入到指定�
 IF									:[iI][fF];									//IF判断函数
 OR									:[oO][rR];									//OR函数
 AND									:[aA][nN][dD];								//AND函数
+AVERAGE								:[aA][vV][eE][rR][aA][gG][eE];				//average平均数函数
+POWER								:[pP][oO][wW][eE][rR];						//power函数
+SIN									:[sS][iI][nN];								//SIN正玄函数
+COS									:[cC][oO][sS];								//COS函数
+PI									:[pP][iI];									//PI圆周率
 
 //数字相关匹配
 INTEGER								:[0-9]+;									//整数，包含正整数、负整数、零

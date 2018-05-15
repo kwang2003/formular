@@ -6,13 +6,13 @@
         负数要带括号因为负号可能被解析成操作符减号
     - 示例
     ```java
-	private static void testNegativeNumber() {
-		assertEquals("(-1)", -1D);
-		assertEquals("(-1.2)", -1.2D);
-		assertEquals("(-3456)", -3456D);
-		assertEquals("(-343)", -343D);
-		assertEquals("(-3.43)", -3.43D);
-	}
+    	private static void testNegativeNumber() {
+    		assertEquals("(-1)", -1D);
+    		assertEquals("(-1.2)", -1.2D);
+    		assertEquals("(-3456)", -3456D);
+    		assertEquals("(-343)", -343D);
+    		assertEquals("(-3.43)", -3.43D);
+    	}
     ```
 - 加法运算+
     - 说明
@@ -36,25 +36,25 @@
         数字之间进行减法运算
     - 示例
     ```java
-	public static void testAddSubstract() {
-		assertEquals("(-1)+3", 2D);
-		assertEquals("(-1)-(-2)", 1D);
-		assertEquals("3+2+1", 6D);
-		assertEquals("3+(-8)+2+1", -2D);
-		assertEquals("3-2+1", 2D);
-		assertEquals("3.5-2.2+1", 2.3D);
-		assertEquals("1-6+abs(3)+max(3,abs((-4)),abs(6))", 4D);		
-		assertEquals("3-2+10", 11D);
-	}
-	private static void testAdd() {
-		assertEquals("(1+1)", 2D);
-		assertEquals("1+2", 3D);
-		assertEquals("1+ABS(2)", 3D);
-		assertEquals("(1)+(2)", 3D);
-		assertEquals("(1+4.2)", 5.2D);
-		assertEquals("1+max(1,2,3)", 4D);
-		assertEquals("1+max(1,2,ABS(3))", 4D);
-	}
+    	public static void testAddSubstract() {
+    		assertEquals("(-1)+3", 2D);
+    		assertEquals("(-1)-(-2)", 1D);
+    		assertEquals("3+2+1", 6D);
+    		assertEquals("3+(-8)+2+1", -2D);
+    		assertEquals("3-2+1", 2D);
+    		assertEquals("3.5-2.2+1", 2.3D);
+    		assertEquals("1-6+abs(3)+max(3,abs((-4)),abs(6))", 4D);		
+    		assertEquals("3-2+10", 11D);
+    	}
+    	private static void testAdd() {
+    		assertEquals("(1+1)", 2D);
+    		assertEquals("1+2", 3D);
+    		assertEquals("1+ABS(2)", 3D);
+    		assertEquals("(1)+(2)", 3D);
+    		assertEquals("(1+4.2)", 5.2D);
+    		assertEquals("1+max(1,2,3)", 4D);
+    		assertEquals("1+max(1,2,ABS(3))", 4D);
+    	}
     ```
 - 括弧运算符()
     - 说明
@@ -260,7 +260,7 @@
 
         使用 OR 函数，它是一个逻辑函数，用于确定测试中的所有条件是否均为 TRUE。
     - 语法
-        IF(OR(A2>1,A2<100),100,50)
+        OR(logical_test1,[logical_test2],...)
     - 示例
     ```java
     	private static void testOr() {
@@ -275,7 +275,7 @@
 
         使用 AND 函数，它是一个逻辑函数，用于确定测试中的所有条件是否均为 TRUE。
     - 语法
-        IF(AND(A2>1,A2<100),100,50)
+        AND(logical_test1,[logical_test2],...)
     - 示例
     ```java
     	private static void testAnd() {
@@ -285,7 +285,116 @@
     		assertEquals("IF(And(FALSE,OR(3>2)),3,2)", 2D);
     	}
     ```
+- [AVERAGE 函数](https://support.office.com/zh-cn/article/average-%E5%87%BD%E6%95%B0-047bac88-d466-426c-a32b-8f33eb960cf6) 
+    - 说明
         
+        返回参数的平均值（算术平均值）。 例如，如果范围A1,A20 包含数字，则公式 =AVERAGE(A1,A20) 将返回这些数字的平均值。
+    - 语法
+    
+        AVERAGE(number1, [number2], ...)
+        
+        AVERAGE 函数语法具有下列参数：
+        - **Number1**    必需。 要计算平均值的第一个数字、单元格引用或单元格区域
+        - **Number2, ...**    可选。 要计算平均值的其他数字、单元格引用或单元格区域，最多可包含 255 个
+    - 示例
+    ```java
+    	public static void testAverage() {
+    		assertEquals("Average(3)", 3D);
+    		assertEquals("Average(3,3)", 3D);
+    		assertEquals("Average(2,4)", 3D);
+    		assertEquals("Average(3.4,2.6)", 3D);
+    		assertEquals("Average(3,average(3))", 3D);
+    		assertEquals("Average(3+3,2)", 4D);
+    		assertEquals("Average(max(3,4,5),7)", 6D);
+    	}    
+    ```
+- [POWER 函数](https://support.office.com/zh-cn/article/power-%E5%87%BD%E6%95%B0-d3f2908b-56f4-4c3f-895a-07fb519c362a)
+    - 说明
+        
+        返回数字乘幂的结果。
+    - 语法
+        
+        POWER(number, power)
+        POWER 函数语法具有下列参数：
+        - **Number**    必需。 基数。 可为任意实数
+        - **power**    必需。 基数乘幂运算的指数
+    - 备注
+        
+        可以使用“^”代替 POWER，以表示基数乘幂运算的幂，例如 5^2。
+    - 示例
+    ```java
+	public static void testPower() {
+		assertEquals("5^2", 25D);
+		assertEquals("2^10", 1024D);
+		assertEquals("6^2/4", 9D);
+		assertEquals("2+5^2", 27D);
+		assertEquals("POWER(5,2)", 25D);
+		assertEquals("POWER(1,2)", 1D);
+		assertEquals("POWER(3,3)", 27D);
+		assertEquals("POWER(max(4,5,3),2)", 25D);
+		assertEquals("POWER(5+2,2)", 49D);
+		assertEquals("POWER(5-2*2+1,2)", 4D);
+	}
+    ```
+- [PI 函数](https://support.office.com/zh-cn/article/pi-%E5%87%BD%E6%95%B0-264199d0-a3ba-46b8-975a-c4a04608989b)
+    - 说明
+        
+        返回数字 3.14159265358979（数学常量 pi），精确到 15 个数字。
+    - 语法
+    
+        标准偏差
+
+        PI 函数语法没有参数
+    - 示例
+    ```java
+	private static void testPi() {
+		assertEquals("pi()", Math.PI);
+		assertEquals("PI()*(3^2)", 28.274333882308138);//圆的面积
+	}
+    ```
+
+- [SIN 函数](https://support.office.com/zh-cn/article/sin-%E5%87%BD%E6%95%B0-cf0e3432-8b9e-483c-bc55-a76651c95602)
+    - 说明
+        
+        返回已知角度的正弦
+    - 语法
+        
+        Sin( number )
+
+        SIN 函数语法具有下列参数：
+        
+        - **Number**    必需。 需要求正弦的角度，以弧度表示。
+    - 备注
+        
+        如果参数是以度数表示的，请将它乘以 PI()/180 或使用 RADIANS 函数将它转换为弧度。
+    - 示例
+    ```java
+	private static void testSin() {
+		assertEquals("sin(0)", 0D);
+		assertEquals("sin(min(3,0,5))", 0D);
+	}
+    ```
+- [COS 函数](https://support.office.com/zh-cn/article/cos-%E5%87%BD%E6%95%B0-0fb808a5-95d6-4553-8148-22aebdce5f05)
+    - 说明
+        
+        返回已知角度的余弦值
+    - 语法
+    
+        COS(number)
+
+        COS 函数语法具有下列参数：
+        - **“数字”**    必需。 想要求余弦的角度，以弧度表示。
+    - 备注
+    
+        如果角度是以度表示的，则可将其乘以 PI()/180 或使用 RADIANS 函数将其转换成弧度。
+    - 示例
+    ```java
+	private static void testCos() {
+		assertEquals("cos(0)", 1D);
+		assertEquals("cos(min(3,0,5))", 1D);
+	}    
+    ```
+
 ### 运行环境
 - jdk1.8
 - antlr4 4.5,antlr4-maven-plugin 4.5

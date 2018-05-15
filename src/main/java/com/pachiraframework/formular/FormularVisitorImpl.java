@@ -5,9 +5,12 @@ import java.math.BigDecimal;
 import com.pachiraframework.formular.FormularParser.AbsContext;
 import com.pachiraframework.formular.FormularParser.AddContext;
 import com.pachiraframework.formular.FormularParser.AndContext;
+import com.pachiraframework.formular.FormularParser.AverageContext;
 import com.pachiraframework.formular.FormularParser.BooleanContext;
 import com.pachiraframework.formular.FormularParser.ComparatorContext;
+import com.pachiraframework.formular.FormularParser.CosContext;
 import com.pachiraframework.formular.FormularParser.DivideContext;
+import com.pachiraframework.formular.FormularParser.ExprContext;
 import com.pachiraframework.formular.FormularParser.FloatContext;
 import com.pachiraframework.formular.FormularParser.IfContext;
 import com.pachiraframework.formular.FormularParser.IntegerContext;
@@ -16,7 +19,10 @@ import com.pachiraframework.formular.FormularParser.MinContext;
 import com.pachiraframework.formular.FormularParser.MultiplyContext;
 import com.pachiraframework.formular.FormularParser.NegativeContext;
 import com.pachiraframework.formular.FormularParser.OrContext;
+import com.pachiraframework.formular.FormularParser.PiContext;
+import com.pachiraframework.formular.FormularParser.PowerContext;
 import com.pachiraframework.formular.FormularParser.RoundContext;
+import com.pachiraframework.formular.FormularParser.SinContext;
 import com.pachiraframework.formular.FormularParser.SubtractContext;
 
 public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
@@ -187,6 +193,41 @@ public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 			}
 		}
 		return ValueWrapper.of(rs);
+	}
+
+	@Override
+	public ValueWrapper visitAverage(AverageContext ctx) {
+		Double total = 0D;
+		int size = ctx.expr().size();
+		for(ExprContext context : ctx.expr()) {
+			ValueWrapper value = visit(context);
+			total += value.doubleValue();
+		}
+		return ValueWrapper.of(total/size);
+	}
+
+	@Override
+	public ValueWrapper visitPower(PowerContext ctx) {
+		ValueWrapper one = visit(ctx.expr(0));
+		ValueWrapper two = visit(ctx.expr(1));
+		return ValueWrapper.of(Math.pow(one.doubleValue(), two.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitSin(SinContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.sin(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitPi(PiContext ctx) {
+		return ValueWrapper.of(Math.PI);
+	}
+
+	@Override
+	public ValueWrapper visitCos(CosContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.cos(value.doubleValue()));
 	}
 
 	private enum OperatorEnum{
