@@ -72,6 +72,64 @@ public class App {
 		
 		//cos 余弦函数
 		testCos();
+		
+		//not 函数
+		testNot();
+		
+		//int函数
+		testInt();
+		
+		//acos函數
+		testAcos();
+		
+		//asin函数
+		testAsin();
+		
+		//atan函数
+		testAtan();
+		
+		//tan函数
+		testTan();
+		
+		//mod函数
+		testMod();
+	}
+	
+	private static void testMod() {
+		assertEquals("MOD(3, 2)", 1D);
+		assertEquals("MOD((-3), 2)", 1D);
+	}
+	
+	private static void testTan() {
+		assertEquals("TAN(0.785)", 0.9992039901050427);
+		assertEquals("TAN(45*PI()/180)", 0.9999999999999999D);
+	}
+	
+	private static void testAtan() {
+		assertEquals("ATAN(1)", 0.7853981633974483);
+		assertEquals("ATAN(1)*180/PI()", 45D);
+	}
+	
+	private static void testAsin() {
+		assertEquals("ASIN((-0.5))*180/PI()", -30.000000000000004D);
+		assertEquals("ASIN((-0.5))", -0.5235987755982989D);
+	}
+	
+	private static void testAcos() {
+		assertEquals("ACOS((-0.5))*180/PI()", 120.00000000000001D);
+	}
+	
+	private static void testInt() {
+		assertEquals("int(1.12)", 1D);
+		assertEquals("INT((-8.9))", -9D);
+		assertEquals("int(1.12+2)", 3D);
+		assertEquals("int(cos(min(3,0,5)))", 1D);
+	}
+	
+	private static void testNot() {
+		assertEquals("if(not(true),3,1)", 1D);
+		assertEquals("if(not(and(3>1,4>2)),3,1)", 1D);
+		assertEquals("if(not(1>2),1,2)", 1D);
 	}
 	
 	private static void testPi() {

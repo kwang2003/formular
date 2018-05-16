@@ -16,8 +16,14 @@ expr
     | MIN'('expr (','expr)*')'													# Min
     | ROUND'('expr ',' INTEGER')'												# Round
     | AVERAGE'('expr (','expr)*')'												# Average
+    | ASIN'('expr')'															# Asin
     | SIN'('expr')'																# Sin
+    | ATAN'('expr')'															# Atan
+    | TAN'('expr')'															    # Tan
+    | ACOS'('expr')'															# Acos
     | COS'('expr')'																# Cos
+    | MOD'('expr','INTEGER')'													# Mod
+    | INT'('expr')'																# Int
     | PI'()'																	# Pi
 ;											
 
@@ -26,6 +32,7 @@ booleanValue
 	| BOOLEAN																	# Boolean
 	| OR'(' booleanValue (',' booleanValue)* ')'								# Or
 	| AND'(' booleanValue (',' booleanValue)* ')'								# And
+	| NOT'(' booleanValue ')'													# Not
 ;
 
 //excel函数名
@@ -36,11 +43,18 @@ ROUND								:[rR][oO][uU][nN][dD];						//函数将数字四舍五入到指定�
 IF									:[iI][fF];									//IF判断函数
 OR									:[oO][rR];									//OR函数
 AND									:[aA][nN][dD];								//AND函数
+NOT									:[nN][oO][tT];								//NOT函数
 AVERAGE								:[aA][vV][eE][rR][aA][gG][eE];				//average平均数函数
 POWER								:[pP][oO][wW][eE][rR];						//power函数
+ASIN								:[aA][sS][iI][nN];							//ASIN正玄函数
 SIN									:[sS][iI][nN];								//SIN正玄函数
+ATAN								:[aA][tT][aA][nN];							//ATAN函数
+TAN								    :[tT][aA][nN];							    //TAN函数
+ACOS								:[aA][cC][oO][sS];							//ACOS函数
 COS									:[cC][oO][sS];								//COS函数
+MOD									:[mM][oO][dD];								//MOD函数
 PI									:[pP][iI];									//PI圆周率
+INT									:[iI][nN][tT];								//INT函数
 
 //数字相关匹配
 INTEGER								:[0-9]+;									//整数，包含正整数、负整数、零

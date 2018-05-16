@@ -1,10 +1,14 @@
 package com.pachiraframework.formular;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import com.pachiraframework.formular.FormularParser.AbsContext;
+import com.pachiraframework.formular.FormularParser.AcosContext;
 import com.pachiraframework.formular.FormularParser.AddContext;
 import com.pachiraframework.formular.FormularParser.AndContext;
+import com.pachiraframework.formular.FormularParser.AsinContext;
+import com.pachiraframework.formular.FormularParser.AtanContext;
 import com.pachiraframework.formular.FormularParser.AverageContext;
 import com.pachiraframework.formular.FormularParser.BooleanContext;
 import com.pachiraframework.formular.FormularParser.ComparatorContext;
@@ -13,17 +17,21 @@ import com.pachiraframework.formular.FormularParser.DivideContext;
 import com.pachiraframework.formular.FormularParser.ExprContext;
 import com.pachiraframework.formular.FormularParser.FloatContext;
 import com.pachiraframework.formular.FormularParser.IfContext;
+import com.pachiraframework.formular.FormularParser.IntContext;
 import com.pachiraframework.formular.FormularParser.IntegerContext;
 import com.pachiraframework.formular.FormularParser.MaxContext;
 import com.pachiraframework.formular.FormularParser.MinContext;
+import com.pachiraframework.formular.FormularParser.ModContext;
 import com.pachiraframework.formular.FormularParser.MultiplyContext;
 import com.pachiraframework.formular.FormularParser.NegativeContext;
+import com.pachiraframework.formular.FormularParser.NotContext;
 import com.pachiraframework.formular.FormularParser.OrContext;
 import com.pachiraframework.formular.FormularParser.PiContext;
 import com.pachiraframework.formular.FormularParser.PowerContext;
 import com.pachiraframework.formular.FormularParser.RoundContext;
 import com.pachiraframework.formular.FormularParser.SinContext;
 import com.pachiraframework.formular.FormularParser.SubtractContext;
+import com.pachiraframework.formular.FormularParser.TanContext;
 
 public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 	@Override
@@ -228,6 +236,50 @@ public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 	public ValueWrapper visitCos(CosContext ctx) {
 		ValueWrapper value = visit(ctx.expr());
 		return ValueWrapper.of(Math.cos(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitNot(NotContext ctx) {
+		ValueWrapper value = visit(ctx.booleanValue());
+		return ValueWrapper.of(!value.booleanValue());
+	}
+
+	@Override
+	public ValueWrapper visitInt(IntContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.floor(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitAcos(AcosContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.acos(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitAsin(AsinContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.asin(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitTan(TanContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.tan(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitAtan(AtanContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.atan(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitMod(ModContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		BigInteger number = BigInteger.valueOf(value.doubleValue().longValue());
+		BigInteger divisor = new BigInteger(ctx.INTEGER().getText());
+		return ValueWrapper.of(number.mod(divisor).doubleValue());
 	}
 
 	private enum OperatorEnum{

@@ -231,6 +231,25 @@
     		assertEquals("round(abs(2.126),2)", 2.13D);
     	}
     ```
+- [INT 函数](https://support.office.com/zh-cn/article/int-%E5%87%BD%E6%95%B0-a6c4af9e-356d-4369-ab6a-cb1fd9d343ef)
+    - 说明
+    
+        将数字向下舍入到最接近的整数
+    - 语法
+    
+        Int( number )
+
+        INT 函数语法具有下列参数：
+        - **Number**    必需。 需要进行向下舍入取整的实数
+    - 示例
+    ```java
+	private static void testInt() {
+		assertEquals("int(1.12)", 1D);
+		assertEquals("INT((-8.9))", -9D);
+		assertEquals("int(1.12+2)", 3D);
+		assertEquals("int(cos(min(3,0,5)))", 1D);
+	}    
+    ```
 - [IF 函数](https://support.office.com/zh-cn/article/if-%E5%87%BD%E6%95%B0-69aed7c9-4e8a-4755-a9bc-aa8bbff73be2)
     - 说明
         对值和期待值进行逻辑比较。IF 函数最简单的形式表示：
@@ -284,6 +303,23 @@
     		assertEquals("if(And(1>2,TRue),1,2)", 2D);
     		assertEquals("IF(And(FALSE,OR(3>2)),3,2)", 2D);
     	}
+    ```
+- [NOT 函数](https://support.office.com/zh-cn/article/not-%E5%87%BD%E6%95%B0-9cfc6011-a054-40c7-a140-cd4ba2d87d77)
+    - 说明
+        
+         **NOT** 函数会对其参数的值进行求反。
+
+         **NOT** 函数的一个常见用途是扩展执行逻辑测试的其它函数的有效性。例如，IF 函数将执行逻辑测试，并在计算结果为 TRUE 时返回一个值，在计算结果为 FALSE 时返回另一个值。通过将 NOT 函数作为 IF 函数的 logical_test 参数，你可以测试众多而不仅是单个条件。
+    - 语法
+        
+         **NOT**（逻辑函数）
+    - 示例
+    ```java
+	private static void testNot() {
+		assertEquals("if(not(true),3,1)", 1D);
+		assertEquals("if(not(and(3>1,4>2)),3,1)", 1D);
+		assertEquals("if(not(1>2),1,2)", 1D);
+	}    
     ```
 - [AVERAGE 函数](https://support.office.com/zh-cn/article/average-%E5%87%BD%E6%95%B0-047bac88-d466-426c-a32b-8f33eb960cf6) 
     - 说明
@@ -392,6 +428,91 @@
 	private static void testCos() {
 		assertEquals("cos(0)", 1D);
 		assertEquals("cos(min(3,0,5))", 1D);
+	}    
+    ```
+- [ACOS 函数](https://support.office.com/zh-cn/article/acos-%E5%87%BD%E6%95%B0-cb73173f-d089-4582-afa1-76e5524b5d5b)
+    - 说明
+        返回数字的反余弦值。 反余弦值是指余弦值为 number 的角度。 返回的角度以弧度表示，弧度值在 0（零）到 pi 之间。
+    - 语法
+    
+        ACOS(number)
+
+        ACOS 函数语法具有以下参数：
+        - **Number**    必需。 所求角度的余弦值，必须介于 -1 到 1 之间
+    - 示例
+    ```java
+	private static void testAcos() {
+		assertEquals("ACOS((-0.5))*180/PI()", 120.00000000000001D);
+	}    
+    ```
+- [ASIN 函數](https://support.office.com/zh-cn/article/asin-%E5%87%BD%E6%95%B0-81fb95e5-6d6f-48c4-bc45-58f955c6d347)
+    - 说明
+        
+        返回数字的反正弦值。 反正弦值是指正弦值为 number 的角度。 返回的角度以弧度表示，弧度值在 -pi/2 到 pi/2 之间。
+    - 语法
+        
+        ASIN(number)
+
+        ASIN 函数语法具有以下参数：
+        - **Number**    必需。 所求角度的正弦值，必须介于 -1 到 1 之间。
+    - 示例
+    ```java
+	private static void testAsin() {
+		assertEquals("ASIN((-0.5))*180/PI()", -30.000000000000004D);
+		assertEquals("ASIN((-0.5))", -0.5235987755982989D);
+	}    
+    ```
+- [TAN 函数](https://support.office.com/zh-cn/article/tan-%E5%87%BD%E6%95%B0-08851a40-179f-4052-b789-d7f699447401)
+    - 说明
+    
+        返回已知角度的正切
+    - 语法
+        
+        TAN(number)
+
+        TAN 函数语法具有下列参数：
+        - **Number**    必需。 要求正切的角度，以弧度表示。
+    - 示例
+    ```java
+	private static void testTan() {
+		assertEquals("TAN(0.785)", 0.9992039901050427);
+		assertEquals("TAN(45*PI()/180)", 0.9999999999999999D);
+	}    
+    ```
+- [ATAN 函数](https://support.office.com/zh-cn/article/atan-%E5%87%BD%E6%95%B0-50746fa8-630a-406b-81d0-4a2aed395543)
+    - 说明
+    
+        返回数字的反正切值。 反正切值是指正切值为 number 的角度。 返回的角度以弧度表示，弧度值在 -pi/2 到 pi/2 之间。
+    - 语法
+    
+        ATAN(number)
+
+        ATAN 函数语法具有以下参数：
+        - **Number**    必需。 所求角度的正切值
+    - 示例
+    ```java
+ 	private static void testAtan() {
+		assertEquals("ATAN(1)", 0.7853981633974483);
+		assertEquals("ATAN(1)*180/PI()", 45D);
+	}   
+    ```
+- [MOD 函数](https://support.office.com/zh-cn/article/mod-%E5%87%BD%E6%95%B0-9b6cd169-b6ee-406a-a97b-edf2a9dc24f3)
+    - 说明
+        
+        返回两数相除的余数。 结果的符号与除数相同。
+    - 语法
+        
+        MOD(number, divisor)
+
+        MOD 函数语法具有下列参数：
+        - **Number**    必需。 要计算余数的被除数。
+        - **Divisor**    必需。 除数。
+
+    - 示例
+    ```java
+	private static void testMod() {
+		assertEquals("MOD(3, 2)", 1D);
+		assertEquals("MOD((-3), 2)", 1D);
 	}    
     ```
 
