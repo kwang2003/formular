@@ -108,6 +108,21 @@ public class App {
 		
 		//sumsq平方和函数
 		testSumSq();
+		
+		//exp函数
+		testExp();
+		
+		//degrees
+		testDegrees();
+	}
+	
+	private static void testDegrees() {
+		assertEquals("DEGREES(PI())", 180D);
+	}
+	
+	private static void testExp() {
+		assertEquals("exp(1)", 2.718281828459045);
+		assertEquals("exp(2)", 7.38905609893065);
 	}
 	
 	private static void testSumSq() {

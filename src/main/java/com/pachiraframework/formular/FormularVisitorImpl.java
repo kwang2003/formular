@@ -14,7 +14,9 @@ import com.pachiraframework.formular.FormularParser.AverageContext;
 import com.pachiraframework.formular.FormularParser.BooleanContext;
 import com.pachiraframework.formular.FormularParser.ComparatorContext;
 import com.pachiraframework.formular.FormularParser.CosContext;
+import com.pachiraframework.formular.FormularParser.DegreesContext;
 import com.pachiraframework.formular.FormularParser.DivideContext;
+import com.pachiraframework.formular.FormularParser.ExpContext;
 import com.pachiraframework.formular.FormularParser.ExprContext;
 import com.pachiraframework.formular.FormularParser.FloatContext;
 import com.pachiraframework.formular.FormularParser.IfContext;
@@ -326,6 +328,18 @@ public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 			result += Math.pow(value.doubleValue(),2);
 		}
 		return ValueWrapper.of(result);
+	}
+
+	@Override
+	public ValueWrapper visitDegrees(DegreesContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.toDegrees(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitExp(ExpContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.exp(value.doubleValue()));
 	}
 
 	private enum OperatorEnum{

@@ -30,6 +30,8 @@ expr
     | INT'('expr')'																# Int
  	| RAND'()'																	# Rand
     | PI'()'																	# Pi
+    | EXP'('expr')'																# Exp
+    | DEGREES'('expr')'															# Degrees
 ;											
 
 booleanValue
@@ -64,7 +66,9 @@ RADIANS								:[rR][aA][dD][iI][aA][nN][sS];				//RADIANS函数
 RAND								:[rR][aA][nN][dD];							//RAND函数
 MOD									:[mM][oO][dD];								//MOD函数
 PI									:[pP][iI];									//PI圆周率
+DEGREES								:[dD][eE][gG][rR][eE][eE][sS];				//DEGREES 函数
 INT									:[iI][nN][tT];								//INT函数
+EXP									:[eE][xX][pP];								//EXP函数
 
 //数字相关匹配
 INTEGER								:[0-9]+;									//整数，包含正整数、负整数、零

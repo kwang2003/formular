@@ -584,6 +584,39 @@
 		assertEquals("1+sumsq(1,2)*2", 11D);
 	}    
     ```
+- [EXP 函数](https://support.office.com/zh-cn/article/exp-%E5%87%BD%E6%95%B0-c578f034-2c45-4c37-bc8c-329660a63abe)
+    - 说明
+    
+        返回 e 的 n 次幂。 常数 e 等于 2.71828182845904，是自然对数的底数
+    - 语法
+        
+        Exp( number )
+
+        EXP 函数语法具有下列参数：
+        - **Number**    必需。 底数 e 的指数
+    - 示例
+    ```java
+	private static void testExp() {
+		assertEquals("exp(1)", 2.718281828459045);
+		assertEquals("exp(2)", 7.38905609893065);
+	}    
+    ```
+- [DEGREES 函数](https://support.office.com/zh-cn/article/degrees-%E5%87%BD%E6%95%B0-4d6ec4db-e694-4b94-ace0-1cc3f61f9ba1)
+    - 说明
+    
+        将弧度转换为度
+    - 语法
+    
+        DEGREES(angle)
+        
+        DEGREES 函数语法具有下列参数：
+        - **角度**    必需。 要转换的角度，以弧度表示。
+    - 示例
+    ```java
+	private static void testDegrees() {
+		assertEquals("DEGREES(PI())", 180D);
+	}    
+    ```
 - [MOD 函数](https://support.office.com/zh-cn/article/mod-%E5%87%BD%E6%95%B0-9b6cd169-b6ee-406a-a97b-edf2a9dc24f3)
     - 说明
         
