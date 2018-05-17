@@ -2,6 +2,7 @@ package com.pachiraframework.formular;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Random;
 
 import com.pachiraframework.formular.FormularParser.AbsContext;
 import com.pachiraframework.formular.FormularParser.AcosContext;
@@ -28,9 +29,14 @@ import com.pachiraframework.formular.FormularParser.NotContext;
 import com.pachiraframework.formular.FormularParser.OrContext;
 import com.pachiraframework.formular.FormularParser.PiContext;
 import com.pachiraframework.formular.FormularParser.PowerContext;
+import com.pachiraframework.formular.FormularParser.RandContext;
+import com.pachiraframework.formular.FormularParser.RandiansContext;
 import com.pachiraframework.formular.FormularParser.RoundContext;
 import com.pachiraframework.formular.FormularParser.SinContext;
+import com.pachiraframework.formular.FormularParser.SqrtContext;
 import com.pachiraframework.formular.FormularParser.SubtractContext;
+import com.pachiraframework.formular.FormularParser.SumContext;
+import com.pachiraframework.formular.FormularParser.SumSqContext;
 import com.pachiraframework.formular.FormularParser.TanContext;
 
 public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
@@ -280,6 +286,46 @@ public class FormularVisitorImpl extends FormularBaseVisitor<ValueWrapper> {
 		BigInteger number = BigInteger.valueOf(value.doubleValue().longValue());
 		BigInteger divisor = new BigInteger(ctx.INTEGER().getText());
 		return ValueWrapper.of(number.mod(divisor).doubleValue());
+	}
+
+	@Override
+	public ValueWrapper visitRandians(RandiansContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.toRadians(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitRand(RandContext ctx) {
+		return ValueWrapper.of(new Random().nextDouble());
+	}
+
+	@Override
+	public ValueWrapper visitSqrt(SqrtContext ctx) {
+		ValueWrapper value = visit(ctx.expr());
+		return ValueWrapper.of(Math.sqrt(value.doubleValue()));
+	}
+
+	@Override
+	public ValueWrapper visitSum(SumContext ctx) {
+		Double result = 0D;
+		int size = ctx.expr().size();
+		for(int i =0;i < size; i++) {
+			ValueWrapper value = visit(ctx.expr(i));
+			result += value.doubleValue();
+		}
+		return ValueWrapper.of(result);
+	}
+
+	@Override
+	public ValueWrapper visitSumSq(SumSqContext ctx) {
+		Double result = 0D;
+		int size = ctx.expr().size();
+		for(int i =0;i < size; i++) {
+			ValueWrapper value = visit(ctx.expr(i));
+			
+			result += Math.pow(value.doubleValue(),2);
+		}
+		return ValueWrapper.of(result);
 	}
 
 	private enum OperatorEnum{

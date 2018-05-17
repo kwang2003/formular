@@ -1,3 +1,4 @@
+完整代码地址:[https://github.com/kwang2003/formular](https://github.com/kwang2003/formular)
 ### 概述
 基于antlr4实现Excel公式计算功能,目前已经实现的函数操作：
 - 负数(-)
@@ -496,6 +497,93 @@
 		assertEquals("ATAN(1)*180/PI()", 45D);
 	}   
     ```
+- [RADIANS 函数](https://support.office.com/zh-cn/article/radians-%E5%87%BD%E6%95%B0-ac409508-3d48-45f5-ac02-1497c92de5bf)    
+    - 说明
+    
+        将度数转换为弧度
+    - 语法
+    
+        RADIANS(angle)
+
+        RADIANS 函数语法具有下列参数：
+        - **Angle**    必需。 要转换的以度数表示的角度
+    - 示例
+    ```java
+	private static void testRadians() {
+		assertEquals("radians(270)", 4.71238898038469);
+	}    
+    ```
+- [RAND 函数](https://support.office.com/zh-cn/article/rand-%E5%87%BD%E6%95%B0-4cbfa695-8869-4788-8d90-021ea9f5be73)
+    - 说明
+    
+         RAND 返回了一个大于等于 0 且小于 1 的平均分布的随机实数。每次计算工作表时都会返回一个新的随机实数。
+    - 语法
+        
+        RAND
+
+        RAND 函数语法没有参数。
+    - 示例
+    ```java
+	private static void testRand() throws Exception{
+		System.out.println(FormularCompiler.compile("rand()").doubleValue());
+		System.out.println(FormularCompiler.compile("rand()*(100+10)").doubleValue());
+	}    
+    ```
+- [SQRT 函数](https://support.office.com/zh-cn/article/sqrt-%E5%87%BD%E6%95%B0-654975c2-05c4-4831-9a24-2c65e4040fdf)
+    - 说明
+    
+        返回正的平方根
+    - 语法
+    
+        SQRT(number)
+
+        SQRT 函数语法具有下列参数：
+        - **Number**    必需。 要计算其平方根的数字。
+    - 示例
+    ```java
+	private static void testSqrt() {
+		assertEquals("sqrt(9)", 3d);
+		assertEquals("sqrt(2*5-6)", 2D);
+		assertEquals("1*sqrt(9)+5*2", 13d);
+		assertEquals("sqrt(max(9,5,min(1,2,7)))", 3d);
+	}    
+    ```
+- [SUM 函数](https://support.office.com/zh-cn/article/sum-%E5%87%BD%E6%95%B0-043e1c7d-7726-4e80-8f32-07b23e057f89)
+    - 说明
+    
+         SUM 函数是一个数学和三角函数，可将值相加。你可以将单个值、单元格引用或是区域相加，或者将三者的组合相加。
+    - 语法
+    
+        SUM(number1, [number2], ...)
+    - 示例
+    ```java
+	private static void testSum() {
+		assertEquals("sum(1)", 1D);
+		assertEquals("sum(1,2)", 3D);
+		assertEquals("2+sum(1,2)", 5D);
+		assertEquals("2*3+sum(1,2)*5", 21D);
+		assertEquals("2*3+sum(1,min(2,3,4))*5", 21D);
+	}    
+    ```
+- [SUMSQ 函数](https://support.office.com/zh-cn/article/sumsq-%E5%87%BD%E6%95%B0-e3313c02-51cc-4963-aae6-31442d9ec307)
+    - 说明
+    
+        返回参数的平方和
+    - 语法
+        
+        SUMSQ(number1, [number2], ...)
+
+        SUMSQ 函数语法具有下列参数：
+        - **number1, number2, ...**    Number1 是必需的，后续数字是可选的。 要对其求平方和的 1 到 255 个参数。 也可以用单一数组或对某个数组的引用来代替用逗号分隔的参数
+    - 示例
+    ```java
+	private static void testSumSq() {
+		assertEquals("sumsq(1)", 1D);
+		assertEquals("sumsq(1,2)", 5D);
+		assertEquals("sumsq(3,4)", 25D);
+		assertEquals("1+sumsq(1,2)*2", 11D);
+	}    
+    ```
 - [MOD 函数](https://support.office.com/zh-cn/article/mod-%E5%87%BD%E6%95%B0-9b6cd169-b6ee-406a-a97b-edf2a9dc24f3)
     - 说明
         
@@ -515,6 +603,7 @@
 		assertEquals("MOD((-3), 2)", 1D);
 	}    
     ```
+
 
 ### 运行环境
 - jdk1.8

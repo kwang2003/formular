@@ -14,6 +14,8 @@ expr
     | ABS'('expr')'                     										# Abs
     | MAX'('expr (','expr)*')'													# Max
     | MIN'('expr (','expr)*')'													# Min
+    | SUMSQ'('expr (','expr)*')'												# SumSq
+    | SUM'('expr (','expr)*')'													# Sum
     | ROUND'('expr ',' INTEGER')'												# Round
     | AVERAGE'('expr (','expr)*')'												# Average
     | ASIN'('expr')'															# Asin
@@ -22,8 +24,11 @@ expr
     | TAN'('expr')'															    # Tan
     | ACOS'('expr')'															# Acos
     | COS'('expr')'																# Cos
+	| SQRT'('expr')'															# Sqrt
+	| RADIANS'('expr')'															# Randians
     | MOD'('expr','INTEGER')'													# Mod
     | INT'('expr')'																# Int
+ 	| RAND'()'																	# Rand
     | PI'()'																	# Pi
 ;											
 
@@ -39,6 +44,8 @@ booleanValue
 ABS									:[aA][bB][sS];								//绝对值
 MAX									:[mM][aA][xX];								//返回一组值中的最大值。MAX(number1, [number2], ...)
 MIN									:[mM][iI][nN];								//返回一组值中的最小值。MIN(number1, [number2], ...)
+SUMSQ								:[sS][uU][mM][sS][qQ];						//返回参数的平方和	
+SUM									:[sS][uU][mM];								//返回一组值的和。SUM(number1, [number2], ...)
 ROUND								:[rR][oO][uU][nN][dD];						//函数将数字四舍五入到指定的位数=ROUND(A1, 2),A1 包含 23.7825,此函数的结果为 23.78。
 IF									:[iI][fF];									//IF判断函数
 OR									:[oO][rR];									//OR函数
@@ -52,6 +59,9 @@ ATAN								:[aA][tT][aA][nN];							//ATAN函数
 TAN								    :[tT][aA][nN];							    //TAN函数
 ACOS								:[aA][cC][oO][sS];							//ACOS函数
 COS									:[cC][oO][sS];								//COS函数
+SQRT								:[sS][qQ][rR][tT];							//SQRT函數
+RADIANS								:[rR][aA][dD][iI][aA][nN][sS];				//RADIANS函数
+RAND								:[rR][aA][nN][dD];							//RAND函数
 MOD									:[mM][oO][dD];								//MOD函数
 PI									:[pP][iI];									//PI圆周率
 INT									:[iI][nN][tT];								//INT函数

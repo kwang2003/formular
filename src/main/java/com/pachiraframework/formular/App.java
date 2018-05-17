@@ -8,14 +8,14 @@ public class App {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		runAllTest();
 	}	
 	
 	/**
 	 * 运行所有测试用例
 	 */
-	public static void runAllTest() {
+	public static void runAllTest() throws Exception{
 		//正数常量
 		testPositiveNumber();
 		
@@ -93,6 +93,52 @@ public class App {
 		
 		//mod函数
 		testMod();
+		
+		//radians函数
+		testRadians();
+		
+		//rand函数
+		testRand();
+		
+		//sqrt函数
+		testSqrt();
+		
+		//sum函数
+		testSum();
+		
+		//sumsq平方和函数
+		testSumSq();
+	}
+	
+	private static void testSumSq() {
+		assertEquals("sumsq(1)", 1D);
+		assertEquals("sumsq(1,2)", 5D);
+		assertEquals("sumsq(3,4)", 25D);
+		assertEquals("1+sumsq(1,2)*2", 11D);
+	}
+	
+	private static void testSum() {
+		assertEquals("sum(1)", 1D);
+		assertEquals("sum(1,2)", 3D);
+		assertEquals("2+sum(1,2)", 5D);
+		assertEquals("2*3+sum(1,2)*5", 21D);
+		assertEquals("2*3+sum(1,min(2,3,4))*5", 21D);
+	}
+	
+	private static void testSqrt() {
+		assertEquals("sqrt(9)", 3d);
+		assertEquals("sqrt(2*5-6)", 2D);
+		assertEquals("1*sqrt(9)+5*2", 13d);
+		assertEquals("sqrt(max(9,5,min(1,2,7)))", 3d);
+	}
+	
+	private static void testRand() throws Exception{
+		System.out.println(FormularCompiler.compile("rand()").doubleValue());
+		System.out.println(FormularCompiler.compile("rand()*(100+10)").doubleValue());
+	}
+	
+	private static void testRadians() {
+		assertEquals("radians(270)", 4.71238898038469);
 	}
 	
 	private static void testMod() {
